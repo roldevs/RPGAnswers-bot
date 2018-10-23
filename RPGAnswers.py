@@ -26,28 +26,39 @@ def listRequest(msg):
 
     sendData(msg, bot, data)
 
-def formatTable(data):
+def toText(data):
+    return formatTable(data, 0)
+
+def indent(level):
+    indentation = ""
+
+    for i in range(0, level):
+        indentation += "-"
+
+    return indentation
+
+def formatTable(data, level):
     
     text = ""
-
     if type(data) == dict:
-        pos = 0
-        listForm = list(data.keys())
 
         for key, value in data.items():
             if key == "text":
-                if pos + 1 < len(data) and (listForm[pos+1] == ("search" or "related")):
-                    text = text + "Buscando: " + value + "\n"
-                else:
-                    text = text + value + "\n"
+                text = text + indent(level) + value + "\n"
             else:
-                text = text + str(formatTable(value))
-
-            pos+=1
+                if key == "related" or key == "results":
+                    text = text + str(formatTable(value, level+1))
+                else:
+                    text = text + str(formatTable(value, level))
 
     if type(data) == list:
+        #print(data)
+        #print("\n")
+
+        #level += 1
+
         for i in data:
-            text = text + str(formatTable(i))
+            text = text + str(formatTable(i, level))
 
     return text
 
@@ -66,7 +77,7 @@ def genRequest(msg):
     r = requests.get(url)
 
     data = r.json()
-    text = formatTable(data)
+    text = toText(data)
     
     sendData(msg, bot, text)
 
