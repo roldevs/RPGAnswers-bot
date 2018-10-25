@@ -55,9 +55,6 @@ def listRequest(msg):
 
     sendData(msg, bot, response)
 
-def toTextGen(data):
-    return formatTable(data, 0)
-
 def indent(level):
     indentation = ""
 
@@ -66,31 +63,26 @@ def indent(level):
 
     return indentation
 
-def formatTable(data, level):
-    
+def jsonToTextGen(data):
+    element = data["data"][0]
+
+    return formatJSON(element, None, 0)
+
+def formatJSON(element, parent, level):
     text = ""
-    if type(data) == dict:
-
-        for key, value in data.items():
-            if key == "text":
-                text = text + indent(level) + value + "\n"
+    for key, value in element.items():
+        if key == "text":
+            if level < 1:
+                text += value + "\n"
             else:
-                if key == "related" or key == "results":
-                    text = text + str(formatTable(value, level+1))
-                else:
-                    text = text + str(formatTable(value, level))
+                text += indent(level) + parent["text"] + ": " + value + "\n"
 
-    if type(data) == list:
-        #print(data)
-        #print("\n")
-
-        #level += 1
-
-        for i in data:
-            text = text + str(formatTable(i, level))
+        elif key == "related":
+            for key2, value2 in value.items():
+                text += formatJSON(value2["results"][0], value2, level+1)
 
     return text
-
+    
 def genRequest(msg):
     command = msg['text']
     basicurl = "https://hall.herokuapp.com/api/random"
@@ -106,7 +98,7 @@ def genRequest(msg):
     r = requests.get(url)
 
     data = r.json()
-    text = toTextGen(data)
+    text = jsonToTextGen(data)
     
     sendData(msg, bot, text)
 
