@@ -5,6 +5,15 @@ from configparser import SafeConfigParser
 import requests
 import json
 
+def toTextList(data):
+    text = ""
+
+    for element in data["data"]:
+        myelement = element.replace(".yml", "")
+        text = text + myelement + "\n"
+
+    return text
+
 def listRequest(msg):
     command = msg['text']
     basicurl = "https://hall.herokuapp.com/api/types"
@@ -13,20 +22,40 @@ def listRequest(msg):
     options = arguments.split(" ")
     options.pop(0)
 
+    checkError = False
+
+    if len(options) == 0:
+        header = "These are the available languages:\n"
+    elif len(options) == 1:
+        header = "These are the available systems for language " + options[0] + ":\n"
+    elif len(options) == 2:
+        header = "These are the available tables for language " + options[0] + " and system " + options[1] + ":\n"
+    else:
+        header = "Incorrect number of parameters for listing available options.\n" 
+
     for parameter in options:
         basicurl+="/" + parameter
 
     url = basicurl + ".json"
 
-    if len(options) == 3:
-        url = url.replace("/api/types/", "/api/random/")
-
     r = requests.get(url = url)
-    data = r.json()
 
-    sendData(msg, bot, data)
+    try:
+        data = r.json()
 
-def toText(data):
+        text = ""
+
+        if ("succes" in data and data["succes"] == True) or ("success" in data and data["success"] == True):
+            response = header + toTextList(data)
+        else:
+            response = header + "No available data."
+
+    except ValueError:
+        response = header + "Could not process your request."
+
+    sendData(msg, bot, response)
+
+def toTextGen(data):
     return formatTable(data, 0)
 
 def indent(level):
@@ -77,7 +106,7 @@ def genRequest(msg):
     r = requests.get(url)
 
     data = r.json()
-    text = toText(data)
+    text = toTextGen(data)
     
     sendData(msg, bot, text)
 
