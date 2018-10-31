@@ -2,3 +2,4 @@ telepot
 argparse
 configparser
 requests
+discord
