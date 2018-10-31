@@ -29,7 +29,7 @@ def formatJSON(node, parent, level):
     if "children" not in node:
         text += indent(level) + node["title"] + ": " + node["text"] + "\n"
     else:
-        text += indent(level) + node["title"] + "\n"
+        text += indent(level) + "[" + node["title"] + "]" + "\n"
         for children in node["children"]:
             text += formatJSON(children, node, level+1)
 
