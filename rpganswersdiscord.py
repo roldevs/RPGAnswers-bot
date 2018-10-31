@@ -1,7 +1,6 @@
+import os
 import discord
 import asyncio
-import argparse
-from configparser import SafeConfigParser
 from botlogic import *
 
 client = discord.Client()
@@ -23,17 +22,7 @@ async def send_message(channel, message):
     await client.send_message(channel, message)
 
 # Main starts here
-# Argument parsing.
-parser = argparse.ArgumentParser(description='Welcome to RPGAnswers bot')
- 
-parser.add_argument('configFile', help='Config file for loading all parameters')
-args = parser.parse_args()
 
-
-# Using config file for parameters
-parser = SafeConfigParser()
-parser.read(args.configFile)
-
-token = parser.get('token', 'discord_token')
+token = str(os.environ["discord_token"])
 
 client.run(token)

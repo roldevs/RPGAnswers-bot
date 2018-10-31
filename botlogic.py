@@ -9,8 +9,23 @@ def processCommand(command):
         response = listRequest(command) 
     elif command.startswith("/gen"):
         response = genRequest(command)
+    elif command.startswith("/help"):
+        response = helpRequest()
+    else:
+        response = helpRequest()
 
     return response
+
+def helpRequest():
+
+	text = ""
+	
+	text += "Available commands" + "\n"
+	text += "/list [lang][system]: this command lists the available languages, the available systems per language and the available random tables per systme" + "\n"
+	text += "/gen [lang][system][table]: this command generates a result from the defined language, system and table" + "\n"
+	text += "/help: lists this menu" + "\n"
+
+	return text
 
 def listRequest(msg):
     command = msg
