@@ -11,7 +11,7 @@ def processCommand(command):
         response = genRequest(command)
     elif command.startswith("/help"):
         response = helpRequest()
-    else:
+    elif command.startswith("/"):
         response = helpRequest()
 
     return response
