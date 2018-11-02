@@ -43,7 +43,7 @@ def listRequest(msg):
         header = "These are the available systems for language " + options[0] + ":\n"
     elif len(options) == 2:
         header = "These are the available tables for language " + options[0] + " and system " + options[1] + ":\n"
-     elif len(options) == 3:
+    elif len(options) == 3:
 	header = "Incorrect number of parameters for /list command. Are you trying to generate a result from a table? \nUse /gen command instead\n"
 	header += helpRequest()
     else:
