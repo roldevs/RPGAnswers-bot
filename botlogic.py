@@ -44,10 +44,10 @@ def listRequest(msg):
     elif len(options) == 2:
         header = "These are the available tables for language " + options[0] + " and system " + options[1] + ":\n"
     elif len(options) == 3:
-        header = "Incorrect number of parameters for /list command. Are you trying to generate a result from a table? \nUse /gen command instead\n"
+        header = "Incorrect number of parameters for /rpglist command. Are you trying to generate a result from a table? \nUse /rpggen command instead\n"
         header += helpRequest()
     else:
-        header = "Incorrect number of parameters for /list command.\n"
+        header = "Incorrect number of parameters for /rpglist command.\n"
         header += helpRequest()
 
     for parameter in options:
