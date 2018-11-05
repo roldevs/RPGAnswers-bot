@@ -26,7 +26,6 @@ def handle(msg):
 
 # Main starts here
 token = str(os.environ["telegram_token"])
-    
 bot = telepot.Bot(token) # Bot is created from the telepot class
     
     
