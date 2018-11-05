@@ -19,7 +19,7 @@ def helpRequest():
 	text = ""
 	
 	text += "Available commands" + "\n"
-	text += "/rpglist [lang][system]: this command lists the available languages, the available systems per language and the available random tables per systme" + "\n"
+	text += "/rpglist [lang][system][table]: this command lists the available languages, the available systems per language, available tables inside the system and generates a random result from a table" + "\n"
 	text += "/help: lists this menu" + "\n"
 
 	return text
