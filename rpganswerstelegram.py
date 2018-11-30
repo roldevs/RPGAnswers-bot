@@ -43,6 +43,7 @@ def on_chosen_inline_result(msg):
 token = str(os.environ["telegram_token"])
 bot = telepot.Bot(token) # Bot is created from the telepot class
 app = Flask(__name__)
+URL = str(os.environ["telegram_url"])
 webhook = OrderedWebhook(bot, {'chat': on_chat_message,
                                'callback_query': on_callback_query,
                                'inline_query': on_inline_query,
