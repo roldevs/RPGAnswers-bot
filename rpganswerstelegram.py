@@ -67,3 +67,4 @@ if __name__ != '__main__':
         pass
 
     webhook.run_as_thread()
+    print("Webhook as thread has been executed")
