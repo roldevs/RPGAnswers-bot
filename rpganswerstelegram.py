@@ -51,7 +51,7 @@ webhook = OrderedWebhook(bot, {'chat': on_chat_message,
 @app.route('/', methods=['GET', 'POST'])
 def pass_update():
     webhook.feed(request.data)
-return 'OK'
+    return 'OK'
 
 if __name__ == '__main__':
     app.run()
