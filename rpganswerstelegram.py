@@ -19,7 +19,7 @@ def on_callback_query(msg):
 
 #def handle(msg):
 def on_chat_message(msg):
-
+    print("Received chat message")
     content_type, chat_type, chat_id = telepot.glance(msg)
     
     if content_type == 'text' :
@@ -29,9 +29,6 @@ def on_chat_message(msg):
         response = "error"
 
     sendData(msg, bot, response)
-
-def on_callback_query(msg):
-    pass
 
 def on_inline_query(msg):
     pass
