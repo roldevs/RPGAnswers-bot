@@ -18,7 +18,7 @@ def sendData(msg, bot, data):
             for line in data:
                 text += line + "\n"
 
-            bot.sendMessage(chat_id, data)
+            bot.sendMessage(chat_id, text)
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
@@ -30,7 +30,6 @@ def on_chat_message(msg):
     
     if content_type == 'text' :
         response = processCommand(msg["text"])
-
     else:
         response = "error"
 
