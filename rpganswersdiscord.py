@@ -19,7 +19,16 @@ async def on_message(message):
         await send_message(message.channel, response)
 
 async def send_message(channel, message):
-    await client.send_message(channel, message)
+    if isinstance(message, str):
+        await client.send_message(channel, message)
+    elif isinstance(message, list):
+        text = ""
+        for line in message:
+            text += line + "\n"
+
+        await client.send_message(channel, text)
+
+
 
 # Main starts here
 

@@ -11,7 +11,14 @@ from telepot.loop import OrderedWebhook
 def sendData(msg, bot, data):
     if bot != None:
         content_type, chat_type, chat_id = telepot.glance(msg)
-        bot.sendMessage(chat_id, data)
+        if isinstance(data, str):
+            bot.sendMessage(chat_id, data)
+        elif isinstance(data, list):
+            text = ""
+            for line in data:
+                text += line + "\n"
+
+            bot.sendMessage(chat_id, data)
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
@@ -19,7 +26,6 @@ def on_callback_query(msg):
 
 #def handle(msg):
 def on_chat_message(msg):
-    print("Received chat message")
     content_type, chat_type, chat_id = telepot.glance(msg)
     
     if content_type == 'text' :
@@ -56,15 +62,10 @@ if __name__ == '__main__':
     printf("Executed the run")
     
 if __name__ != '__main__':
-    print("Executing the stuff")
-    print("After running app")
     try:
-        print("Inside try")
         bot.setWebhook(URL)
-        print("After setting webhook")
     # Sometimes it would raise this error, but webhook still set successfully.
     except telepot.exception.TooManyRequestsError:
         pass
 
     webhook.run_as_thread()
-    print("Webhook as thread has been executed")

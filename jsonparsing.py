@@ -9,11 +9,11 @@ def indent(level):
     return indentation
 
 def toTextList(data):
-    text = ""
+    text = []
 
     for node in data["data"]:
         mynode = node.replace(".yml", "")
-        text = text + mynode + "\n"
+        text.append(mynode)
 
     return text
 
@@ -21,17 +21,20 @@ def toTextList(data):
 def jsonToTextGen(data):
     node = data["data"][0]
 
-    return formatJSON(node, None, 0)
+    text = []
+    return formatJSON(text, node, None, 0)
 
-def formatJSON(node, parent, level):
-    text = ""
+def formatJSON(text, node, parent, level):
+    #text = ""
+    textLocal = []
 
     if "children" not in node:
-        text += indent(level) + node["title"] + ": " + node["text"] + "\n"
+        #text += indent(level) + node["title"] + ": " + node["text"] + "\n"
+        text.append(indent(level) + node["title"] + ": " + node["text"])
     else:
-        text += indent(level) + "[" + node["title"] + "]" + "\n"
+        text.append(indent(level) + "[" + node["title"] + "]")
         for children in node["children"]:
-            text += formatJSON(children, node, level+1)
+            text += formatJSON([], children, node, level+1)
 
     return text
 
