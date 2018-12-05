@@ -1,5 +1,6 @@
 import requests
 from jsonparsing import *
+from botresponse import *
 
 def processCommand(command):
 
@@ -16,66 +17,83 @@ def processCommand(command):
 
 def helpRequest():
 
-	text = []
+    response = botresponse()
 	
-	text.append("Available commands")
-	text.append("/rpglist [lang][system][table]: this command lists the available languages, the available systems per language, available tables inside the system and generates a random result from a table")
-	text.append("/help: lists this menu")
+    response.setHeader("Available commands:")
+    line = botline()
+    line2 = botline()
+    line.lineType = "normal"
+    line2.lineType = "normal"
 
-	return text
+    line.text="/rpglist [lang][system][table]: this command lists the available languages, the available systems per language, available tables inside the system and generates a random result from a table"
+    line2.text="/help: lists this menu"
+
+    response.addLine(line)
+    response.addLine(line2)
+
+    return response
 
 def fillHeader(options):
+    header = ""
 
-    header = []
     if len(options) == 0:
-        header.append("These are the available languages:")
+        header = "These are the available languages:"
     elif len(options) == 1:
-        header.append("These are the available systems for language " + options[0] + ":")
+        header = "These are the available systems for language " + options[0] + ":"
     elif len(options) == 2:
-        header.append("These are the available tables for language " + options[0] + " and system " + options[1] + ":")
+        header = "These are the available tables for language " + options[0] + " and system " + options[1] + ":"
     elif len(options) == 3:
-        header.append("Generating results:")
+        header = "Generating results:"
     else:
-        header.append("Incorrect number of parameters for /rpglist command.")
-        header += helpRequest()
+        header = "Incorrect number of parameters for /rpglist command."
+        #header += helpRequest()
 
     return header 
 
 def listFunction(url):
     
     r = requests.get(url = url)
-    response = []
+    lines = []
     
     try:
         data = r.json()
     
         if ("success" in data and data["success"] == True):
-            response += toTextList(data)
+            lines = toTextList(data)
         else:
-            response.append("No available data.")
+            line = botline()
+            line.lineType = "normal"
+            line.text = "No available data"
+            lines.append(line)
     
     except ValueError:
         response.append("Could not process your request.")
 
-    return response
+    return lines
 
 def genFunction(url):
 
     url = url.replace("/api/types/", "/api/random/")
     r = requests.get(url)
-    response = []
+    lines = []
 
     try:
         data = r.json()
         if ("success" in data and data["success"] == True):
-            response = jsonToTextGen(data)
+            lines = jsonToTextGen(data)
         else:
-            response.append("No available data.")
+            line = botline()
+            line.lineType = "normal"
+            line.text = "No available data."
+            lines.append(line)
 
     except ValueError:
-        response.append("Could not process your request.")
+        line = botline()
+        line.lineType = "normal"
+        line.text = "Could not process your request."
+        lines.append(line)
 
-    return response
+    return lines
 
 def listRequest(msg):
     command = msg
@@ -86,7 +104,8 @@ def listRequest(msg):
     options.pop(0)
     listOrGenerate = "list"
 
-    header = fillHeader(options)
+    response = botresponse()
+    response.header = fillHeader(options)
 
     if len(options) == 3:
         listOrGenerate = "generate"
@@ -96,10 +115,9 @@ def listRequest(msg):
 
     url = basicurl + ".json"
 
-    response = []
     if listOrGenerate == "list":
-        response = header + listFunction(url)
+        response.lines = listFunction(url)
     elif listOrGenerate == "generate":
-        response = header + genFunction(url)
+        response.lines = genFunction(url)
     
     return response

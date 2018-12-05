@@ -1,4 +1,5 @@
 import json
+from botline import *
 
 def indent(level):
     indentation = ""
@@ -9,32 +10,42 @@ def indent(level):
     return indentation
 
 def toTextList(data):
-    text = []
+    lines = []
 
     for node in data["data"]:
         mynode = node.replace(".yml", "")
-        text.append(mynode)
+        line = botline()
+        line.lineType = "normal"
+        line.text = mynode
+        lines.append(line)
 
-    return text
+    return lines
 
 
 def jsonToTextGen(data):
     node = data["data"][0]
 
-    text = []
-    return formatJSON(text, node, None, 0)
+    lines = []
+    response = formatJSON(lines, node, None, 0)
+    return response
 
-def formatJSON(text, node, parent, level):
-    #text = ""
-    textLocal = []
+def formatJSON(lines, node, parent, level):
 
     if "children" not in node:
-        #text += indent(level) + node["title"] + ": " + node["text"] + "\n"
-        text.append(indent(level) + node["title"] + ": " + node["text"])
+        line = botline()
+        line.indent = level
+        line.lineType = "attribute"
+        line.attribute = node["title"]
+        line.attributeValue = node["text"]
+        lines.append(line)
     else:
-        text.append(indent(level) + "[" + node["title"] + "]")
+        line = botline()
+        line.indent = level
+        line.lineType = "table"
+        line.text = node["title"]
+        lines.append(line)
         for children in node["children"]:
-            text += formatJSON([], children, node, level+1)
+            lines += formatJSON([], children, node, level+1)
 
-    return text
+    return lines
 

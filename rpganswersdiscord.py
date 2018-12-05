@@ -1,9 +1,18 @@
 import os
 import discord
 import asyncio
+from botresponse import *
 from botlogic import *
 
 client = discord.Client()
+
+def indent(level):
+    indentation = ""
+
+    for i in range(0, level):
+        indentation += "-"
+
+    return indentation
 
 @client.event
 async def on_ready():
@@ -18,16 +27,18 @@ async def on_message(message):
         response = processCommand(message.content)
         await send_message(message.channel, response)
 
-async def send_message(channel, message):
-    if isinstance(message, str):
-        await client.send_message(channel, message)
-    elif isinstance(message, list):
-        text = ""
-        for line in message:
-            text += line + "\n"
+async def send_message(channel, response):
+    if isinstance(response, botresponse):
+        text = response.header + "\n"
+        for textLine in response.lines:
+            if textLine.lineType== "normal":
+                text += textLine.text + "\n"
+            if textLine.lineType == "table":
+                text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
+            if textLine.lineType == "attribute":
+                text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
         await client.send_message(channel, text)
-
 
 
 # Main starts here

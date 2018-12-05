@@ -11,12 +11,15 @@ from telepot.loop import OrderedWebhook
 def sendData(msg, bot, data):
     if bot != None:
         content_type, chat_type, chat_id = telepot.glance(msg)
-        if isinstance(data, str):
-            bot.sendMessage(chat_id, data)
-        elif isinstance(data, list):
-            text = ""
-            for line in data:
-                text += line + "\n"
+        if isinstance(response, botresponse):
+        text = response.header + "\n"
+        for textLine in response.lines:
+            if textLine.lineType== "normal":
+                text += textLine.text + "\n"
+            if textLine.lineType == "table":
+                text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
+            if textLine.lineType == "attribute":
+                text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
             bot.sendMessage(chat_id, text)
 
