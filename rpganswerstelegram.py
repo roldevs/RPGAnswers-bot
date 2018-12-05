@@ -8,7 +8,7 @@ from flask import Flask, request
 from botlogic import *
 from telepot.loop import OrderedWebhook
 
-def sendData(msg, bot, data):
+def sendData(msg, bot, response):
     if bot != None:
         content_type, chat_type, chat_id = telepot.glance(msg)
         if isinstance(response, botresponse):
