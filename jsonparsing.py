@@ -1,14 +1,6 @@
 import json
 from botline import *
 
-def indent(level):
-    indentation = ""
-
-    for i in range(0, level):
-        indentation += "-"
-
-    return indentation
-
 def toTextList(data):
     lines = []
 

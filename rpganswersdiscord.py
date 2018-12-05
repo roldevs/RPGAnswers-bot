@@ -1,7 +1,6 @@
 import os
 import discord
 import asyncio
-from botresponse import *
 from botlogic import *
 
 client = discord.Client()
