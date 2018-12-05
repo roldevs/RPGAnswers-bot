@@ -67,7 +67,10 @@ def listFunction(url):
             lines.append(line)
     
     except ValueError:
-        response.append("Could not process your request.")
+            line = botline()
+            line.lineType = "normal"
+            line.text = "Could not process your request"
+            lines.append(line)
 
     return lines
 
