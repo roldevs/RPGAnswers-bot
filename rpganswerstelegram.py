@@ -8,6 +8,14 @@ from flask import Flask, request
 from botlogic import *
 from telepot.loop import OrderedWebhook
 
+def indent(level):
+    indentation = ""
+
+    for i in range(0, level):
+        indentation += "-"
+
+    return indentation
+
 def sendData(msg, bot, response):
     if bot != None:
         content_type, chat_type, chat_id = telepot.glance(msg)
