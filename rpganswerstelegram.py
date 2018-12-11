@@ -20,21 +20,21 @@ def sendData(msg, bot, response):
     if bot == None:
         return
 
-   content_type, chat_type, chat_id = telepot.glance(msg)
-   if isinstance(response, botresponse) == false:
-       return
+    content_type, chat_type, chat_id = telepot.glance(msg)
+    if isinstance(response, botresponse) == false:
+        return
 
-  text = response.header + "\n"
+    text = response.header + "\n"
 
-  for textLine in response.lines:
-      if textLine.lineType== "normal":
-          text += textLine.text + "\n"
-      if textLine.lineType == "table":
-          text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
-      if textLine.lineType == "attribute":
-          text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
+    for textLine in response.lines:
+        if textLine.lineType== "normal":
+            text += textLine.text + "\n"
+        if textLine.lineType == "table":
+            text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
+        if textLine.lineType == "attribute":
+            text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
-  bot.sendMessage(chat_id, text)
+    bot.sendMessage(chat_id, text)
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
