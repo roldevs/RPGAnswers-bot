@@ -21,7 +21,7 @@ def sendData(msg, bot, response):
         return
 
     content_type, chat_type, chat_id = telepot.glance(msg)
-    if isinstance(response, botresponse) == false:
+    if isinstance(response, botresponse) == False:
         return
 
     text = response.header + "\n"
