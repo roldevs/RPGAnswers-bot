@@ -1,0 +1,18 @@
+from command.base import CommandBase
+from formatter.tree import FormatterTree
+
+class CommandRandomTable(CommandBase):
+  def isCommand(self):
+    return self.parser().isRpgList() and self.parser().optionsLength() == 3
+
+  def header(self):
+    return "Generating results:"
+
+  def formatter(self):
+    return FormatterTree
+
+  def header(self):
+    return "Generating results:"
+
+  def url(self):
+    return "/api/random/%s/%s/%s.json" % (self.locale(), self.system(), self.table())
