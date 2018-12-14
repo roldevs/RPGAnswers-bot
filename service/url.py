@@ -7,6 +7,5 @@ class ServiceUrl(ServiceBase):
 
   def get(self, url):
     r = requests.get(self.base_url + url)
-    print(self.base_url + url)
     self.serverResponse = r.json()
     return super().get(url)
