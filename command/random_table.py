@@ -5,9 +5,6 @@ class CommandRandomTable(CommandBase):
   def isCommand(self):
     return self.parser().isRpgList() and self.parser().optionsLength() == 3
 
-  def header(self):
-    return "Generating results:"
-
   def formatter(self):
     return FormatterTree
 

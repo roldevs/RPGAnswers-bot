@@ -6,6 +6,9 @@ class CommandParse:
   def isRpgList(self):
     return self.command.startswith("/rpglist")
 
+  def isHelp(self):
+    return self.command.startswith("/help")
+
   def options(self):
     opts = self.command.split(" ")
     opts.pop(0)
