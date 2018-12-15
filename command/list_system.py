@@ -6,10 +6,10 @@ class CommandListSystem(CommandBase):
     return self.parser().isRpgList() and self.parser().optionsLength() == 1
 
   def header(self):
-    return "These are the available systems for language '%s':" % self.locale()
+    return "These are the available systems for language '%s':" % self.parser().locale()
 
   def url(self):
-    return "/api/types/%s.json" % self.locale()
+    return "/api/types/%s.json" % self.parser().locale()
 
   def formatter(self):
     return FormatterList

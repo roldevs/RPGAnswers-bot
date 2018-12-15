@@ -14,15 +14,6 @@ class CommandBase(object):
   def parser(self):
     return CommandParse(self.command)
 
-  def locale(self):
-    return self.parser().options()[0]
-
-  def system(self):
-    return self.parser().options()[1]
-
-  def table(self):
-    return self.parser().options()[2]
-
   def url(self):
     raise NotImplementedError()
 

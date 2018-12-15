@@ -6,10 +6,10 @@ class CommandListTable(CommandBase):
     return self.parser().isRpgList() and self.parser().optionsLength() == 2
 
   def header(self):
-    return "These are the available tables for language '" + self.locale() + "' and system '" + self.system() + "':"
+    return "These are the available tables for language '" + self.parser().locale() + "' and system '" + self.parser().system() + "':"
 
   def url(self):
-    return "/api/types/%s/%s.json" % (self.locale(), self.system())
+    return "/api/types/%s/%s.json" % (self.parser().locale(), self.parser().system())
 
   def formatter(self):
     return FormatterList

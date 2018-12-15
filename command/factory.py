@@ -20,4 +20,4 @@ class CommandFactory:
     for klass in self.COMMANDS:
       if klass(self.service, cmd).isCommand():
         return klass(self.service, cmd)
-    raise Exception("Incorrect number of parameters for /rpglist command.")
+    raise Exception("Incorrect number of parameters or bad command.")

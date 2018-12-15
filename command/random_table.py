@@ -12,4 +12,4 @@ class CommandRandomTable(CommandBase):
     return "Generating results:"
 
   def url(self):
-    return "/api/random/%s/%s/%s.json" % (self.locale(), self.system(), self.table())
+    return "/api/random/%s/%s/%s.json" % (self.parser().locale(), self.parser().system(), self.parser().table())
