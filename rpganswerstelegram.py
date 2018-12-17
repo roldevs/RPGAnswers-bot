@@ -15,6 +15,7 @@ def on_callback_query(msg):
 #def handle(msg):
 def on_chat_message(msg):
   content_type, chat_type, chat_id = telepot.glance(msg)
+  text = getResponse(msg['text'])
   bot.sendMessage(chat_id, text)
 
 def on_inline_query(msg):
