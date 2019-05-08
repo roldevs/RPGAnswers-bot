@@ -32,6 +32,7 @@ def sendData(msg, bot, response):
         if textLine.lineType== "normal":
             if response.query != None:
                 my_keyboard.append([InlineKeyboardButton(text=textLine.text, callback_data=response.query + " " + textLine.text)])
+                print(my_keyboard)
             else:
                 text += textLine.text + "\n"
         if textLine.lineType == "table":
