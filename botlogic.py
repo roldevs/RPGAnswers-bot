@@ -120,6 +120,7 @@ def listRequest(msg):
 
     if listOrGenerate == "list":
         response.lines = listFunction(url)
+        response.setQuery(msg)
     elif listOrGenerate == "generate":
         response.lines = genFunction(url)
     

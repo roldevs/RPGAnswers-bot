@@ -26,15 +26,18 @@ def sendData(msg, bot, response):
 
     text = response.header + "\n"
 
+    my_keyboard = []
+
     for textLine in response.lines:
         if textLine.lineType== "normal":
             text += textLine.text + "\n"
+            my_keyboard.append([InlineKeyboardButton(text=text, callback_data=response.query + " " + text)])
         if textLine.lineType == "table":
             text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
         if textLine.lineType == "attribute":
             text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
-    bot.sendMessage(chat_id, text)
+    bot.sendMessage(chat_id, text, reply_markup=my_keyboard)
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')

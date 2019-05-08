@@ -3,6 +3,7 @@ from botline import *
 class botresponse:
     header = ""
     lines = []
+    query = None
 
     def __init__(self):
         self.header = ""
@@ -19,3 +20,9 @@ class botresponse:
             self.lines.append(line)
         else:
             raise ValueError("A line is trying to be added without botline type")
+
+    def setQuery(self, newQuery):
+        if isinstance(newQuery, str):
+            self.query= newQuery
+        else:
+            raise ValueError("Query is trying to be set without a string type")
