@@ -45,6 +45,7 @@ def sendData(msg, bot, response):
 
 def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
+    on_chat_message(msg)
     print('Callback Query:', query_id, from_id, query_data)
 
 #def handle(msg):
