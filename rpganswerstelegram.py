@@ -31,7 +31,7 @@ def sendData(chat_id, bot, response):
     for textLine in response.lines:
         if textLine.lineType== "normal":
             if response.query != None:
-                keyboardLine.append([InlineKeyboardButton(text=textLine.text, callback_data=response.query + " " + textLine.text)])
+                keyboardLine.append(InlineKeyboardButton(text=textLine.text, callback_data=response.query + " " + textLine.text))
             else:
                 text += textLine.text + "\n"
         if textLine.lineType == "table":
