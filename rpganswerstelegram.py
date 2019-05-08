@@ -39,7 +39,7 @@ def sendData(chat_id, bot, response):
             text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
     if response.query != None and len(response.query.split()) > 1:
-        my_keyboard.append([InlineKeyboardButton(text="<<Back", callback_data=response.query.rsplit(' ',1[0]))])
+        my_keyboard.append([InlineKeyboardButton(text="<<Back", callback_data=response.query.rsplit(' ', 1)[0])])
         my_keyboard.append([InlineKeyboardButton(text="[Home]", callback_data="/rpglist")])
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=my_keyboard)
