@@ -16,11 +16,10 @@ def indent(level):
 
     return indentation
 
-def sendData(msg, bot, response):
+def sendData(msg, chat_id, response):
     if bot == None:
         return
 
-    content_type, chat_type, chat_id = telepot.glance(msg)
     if isinstance(response, botresponse) == False:
         return
 
@@ -46,7 +45,7 @@ def on_callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
     response = processCommand(query_data)
     #print('Callback Query:', query_id, from_id, query_data)
-    sendData(msg, bot, response)
+    sendData(from_id, bot, response)
 
 #def handle(msg):
 def on_chat_message(msg):
@@ -57,7 +56,7 @@ def on_chat_message(msg):
     else:
         response = "error"
 
-    sendData(msg, bot, response)
+    sendData(chat_id, bot, response)
 
 def on_inline_query(msg):
     pass
