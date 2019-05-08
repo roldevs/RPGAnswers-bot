@@ -16,7 +16,7 @@ def indent(level):
 
     return indentation
 
-def sendData(msg, chat_id, response):
+def sendData(chat_id, bot, response):
     if bot == None:
         return
 
