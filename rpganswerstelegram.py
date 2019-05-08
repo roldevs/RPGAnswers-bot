@@ -31,7 +31,8 @@ def sendData(msg, bot, response):
     for textLine in response.lines:
         if textLine.lineType== "normal":
             text += textLine.text + "\n"
-            my_keyboard.append([InlineKeyboardButton(text=text, callback_data=response.query + " " + text)])
+            if response.query != None:
+                my_keyboard.append([InlineKeyboardButton(text=text, callback_data=response.query + " " + text)])
         if textLine.lineType == "table":
             text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
         if textLine.lineType == "attribute":
