@@ -26,11 +26,12 @@ def sendData(chat_id, bot, response):
     text = response.header + "\n"
 
     my_keyboard = []
+    keyboardLine = []
 
     for textLine in response.lines:
         if textLine.lineType== "normal":
             if response.query != None:
-                my_keyboard.append([InlineKeyboardButton(text=textLine.text, callback_data=response.query + " " + textLine.text)])
+                keyboardLine.append([InlineKeyboardButton(text=textLine.text, callback_data=response.query + " " + textLine.text)])
             else:
                 text += textLine.text + "\n"
         if textLine.lineType == "table":
@@ -38,6 +39,7 @@ def sendData(chat_id, bot, response):
         if textLine.lineType == "attribute":
             text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
 
+    my_keyboard.append(keyboardLine)
     keyboard = InlineKeyboardMarkup(inline_keyboard=my_keyboard)
     bot.sendMessage(chat_id, text, reply_markup=keyboard)
 
