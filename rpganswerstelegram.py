@@ -26,6 +26,8 @@ def sendData(chat_id, bot, response):
     text = response.header + "\n"
 
     my_keyboard = []
+    
+    generated_result = False
 
     for textLine in response.lines:
         if textLine.lineType== "normal":
@@ -36,7 +38,11 @@ def sendData(chat_id, bot, response):
         if textLine.lineType == "table":
             text += indent(textLine.indent) + "[" + textLine.text + "]" + "\n"
         if textLine.lineType == "attribute":
+            generated_result = True
             text += indent(textLine.indent) + textLine.attribute + ": " + textLine.attributeValue + "\n"
+
+    if generated_result == True:
+            my_keyboard.append([InlineKeyboardButton(text="Generate again", callback_data=response.query)])
 
     if response.query != None and len(response.query.split()) > 1:
         my_keyboard.append([InlineKeyboardButton(text="<<Back", callback_data=response.query.rsplit(' ', 1)[0]), InlineKeyboardButton(text="[Home]", callback_data="/rpglist")])
