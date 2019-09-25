@@ -10,6 +10,8 @@ def processCommand(command):
         response = listRequest(command) 
     elif command.startswith("/help"):
         response = helpRequest()
+    elif command.startswith("/start"):
+        response = helpRequest()
     else:
         pass
 
