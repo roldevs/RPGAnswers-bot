@@ -12,7 +12,7 @@ multidict==4.4.2
 requests
 telepot==12.7
 urllib3
-websockets==3.4
+websockets==9.1
 yarl==1.2.6
 gunicorn
 flask
